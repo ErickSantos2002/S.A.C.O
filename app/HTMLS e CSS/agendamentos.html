@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agendamentos - S.A.C.O</title>
+  <link rel="stylesheet" href="dashboard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <div class="logo">S.A.C.O</div>
+      <nav class="menu">
+        <a href="dashboard.html" class="menu-item">Início</a>
+        <a href="agendamentos.html" class="menu-item">Agendamentos</a>
+        <a href="usuarios.html" class="menu-item">Usuários</a>
+        <a href="#" class="menu-item logout">Sair</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="top-bar">
+        <h1 class="page-title">Agendamentos</h1>
+        <div class="user-info">Olá, Usuário</div>
+      </div>
+
+      <section class="cards">
+        <!-- Formulário de Agendamento -->
+        <div class="card">
+          <form id="form-agendamento">
+            <div style="margin-bottom: 15px;">
+              <label for="data">Data do Agendamento</label><br />
+              <input type="date" id="data" name="data" required style="width: 100%; padding: 8px; margin-top: 5px;" />
+            </div>
+
+            <div style="margin-bottom: 15px;">
+              <label for="hora">Horário</label><br />
+              <input type="time" id="hora" name="hora" required style="width: 100%; padding: 8px; margin-top: 5px;" />
+            </div>
+
+            <div style="margin-bottom: 15px;">
+              <label for="local">Local</label><br />
+              <input type="text" id="local" name="local" required placeholder="Digite o local do agendamento" style="width: 100%; padding: 8px; margin-top: 5px;" />
+            </div>
+
+            <div style="margin-bottom: 15px;">
+              <label for="descricao">Descrição</label><br />
+              <textarea id="descricao" name="descricao" rows="4" required placeholder="Descreva o agendamento" style="width: 100%; padding: 8px; margin-top: 5px;"></textarea>
+            </div>
+
+            <button type="submit" style="background: #8d6e63; color: white; padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer;">Salvar Agendamento</button>
+          </form>
+        </div>
+
+        <!-- Campo de Busca + Tabela -->
+        <div class="card">
+          <input type="text" id="searchInput" placeholder="Buscar agendamentos..." style="width: 100%; padding: 10px; margin-bottom: 15px;">
+
+          <div style="overflow-x: auto;">
+            <table id="agendamentosTable" style="width: 100%; border-collapse: collapse;">
+              <thead>
+                <tr style="background: #f0f0f0;">
+                  <th style="padding: 10px; text-align: left;">Data</th>
+                  <th style="padding: 10px; text-align: left;">Horário</th>
+                  <th style="padding: 10px; text-align: left;">Local</th>
+                  <th style="padding: 10px; text-align: left;">Descrição</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Agendamentos aparecerão aqui -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="dashboard.js"></script>
+  <script>
+    const form = document.getElementById('form-agendamento');
+    const tableBody = document.querySelector('#agendamentosTable tbody');
+    const searchInput = document.getElementById('searchInput');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const token = localStorage.getItem("token");
+      const data_hora = document.getElementById('data').value + "T" + document.getElementById('hora').value;
+      const local = document.getElementById('local').value;
+      const descricao = document.getElementById('descricao').value;
+
+      const res = await fetch("http://localhost:8000/agendamentos/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + token
+        },
+        body: JSON.stringify({ data_hora, local, descricao }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("Agendamento salvo!");
+        location.reload();
+      } else {
+        alert(data.detail);
+      }
+    });
+
+    searchInput.addEventListener('input', function () {
+      const filter = searchInput.value.toLowerCase();
+      const rows = tableBody.getElementsByTagName('tr');
+
+      Array.from(rows).forEach(row => {
+        const cells = row.getElementsByTagName('td');
+        const match = Array.from(cells).some(cell => cell.textContent.toLowerCase().includes(filter));
+        row.style.display = match ? '' : 'none';
+      });
+    });
+    async function carregarAgendamentos() {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch("http://localhost:8000/agendamentos/", {
+        headers: {
+          "Authorization": "Bearer " + token
+        }
+      });
+
+      const agendamentos = await res.json();
+      if (res.ok) {
+        agendamentos.forEach(ag => {
+          const row = document.createElement("tr");
+          const data = new Date(ag.data_hora);
+          const dataFormatada = data.toLocaleDateString();
+          const horaFormatada = data.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+          row.innerHTML = `
+            <td style="padding: 10px;">${dataFormatada}</td>
+            <td style="padding: 10px;">${horaFormatada}</td>
+            <td style="padding: 10px;">${ag.local}</td>
+            <td style="padding: 10px;">${ag.descricao}</td>
+          `;
+          tableBody.appendChild(row);
+        });
+      } else {
+        alert("Erro ao carregar agendamentos.");
+      }
+    }
+
+    carregarAgendamentos();
+</script>
+</body>
+</html>

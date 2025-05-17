@@ -1,0 +1,158 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+}
+
+/* Fundo da tela */
+.fundo-bege {
+  background-color: #f5f5dc;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 20px;
+}
+
+/* Efeitos com before e after */
+.fundo-bege::before,
+.fundo-bege::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+  z-index: 0;
+}
+
+.fundo-bege::before {
+  width: 300px;
+  height: 300px;
+  background-color: #d2b48c;
+  top: 10%;
+  left: 5%;
+}
+
+.fundo-bege::after {
+  width: 400px;
+  height: 400px;
+  background-color: #e6cfa1;
+  bottom: 5%;
+  right: 10%;
+}
+
+/* Card central */
+.caixa-login {
+  position: relative;
+  z-index: 1;
+  background-color: #ffffff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* Faixa decorativa no topo do card */
+.caixa-login::before {
+  content: "";
+  position: absolute;
+  width: 120%;
+  height: 40px;
+  top: 0;
+  left: -10%;
+  background-color: #d2b48c;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  z-index: 0;
+}
+
+/* Logo */
+.imagem-logo {
+  max-width: 100px;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Formulário */
+.formulario-login {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Campos do formulário */
+.campo-formulario {
+  display: flex;
+  flex-direction: column;
+}
+
+.texto-label {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #333;
+}
+
+.campo-texto {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+/* Botão */
+.botao-entrar {
+  background-color: #d2b48c;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.botao-entrar:hover {
+  background-color: #e6cfa1;
+}
+
+/* ---------------------- */
+/* 🌐 RESPONSIVIDADE     */
+/* ---------------------- */
+
+@media (max-width: 480px) {
+  .caixa-login {
+    padding: 25px;
+    max-width: 90%;
+  }
+
+  .imagem-logo {
+    max-width: 80px;
+    margin-bottom: 20px;
+  }
+
+  .botao-entrar {
+    font-size: 15px;
+    padding: 10px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .caixa-login {
+    padding: 30px;
+    max-width: 95%;
+  }
+}

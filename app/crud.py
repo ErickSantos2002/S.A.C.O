@@ -8,7 +8,7 @@ Funções de criação, listagem, edição e exclusão de agendamentos com valid
 
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
-from . import models, schemas
+from . import models, schemas, auth
 
 def criar_usuario(db: Session, usuario: schemas.UserCreate):
     """

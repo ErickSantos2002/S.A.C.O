@@ -1,0 +1,114 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Container principal */
+.usuario-content {
+  padding: 20px;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* Título */
+.usuario-content h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* ---------------------- */
+/* Estilo do formulário */
+.usuario-form {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin-bottom: 30px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.usuario-form .form-group {
+  margin-bottom: 15px;
+}
+
+.usuario-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+.usuario-form input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.usuario-form input:focus {
+  outline: none;
+  border-color: #8d6e63;
+}
+
+.usuario-form button {
+  background-color: #8d6e63;
+  color: white;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.usuario-form button:hover {
+  background-color: #6d4c41;
+}
+
+/* ---------------------- */
+/* Estilo da tabela */
+.usuario-tabela {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+}
+
+.usuario-tabela h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.usuario-tabela input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+/* Tabela */
+.usuario-tabela table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.usuario-tabela th,
+.usuario-tabela td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.usuario-tabela thead {
+  background-color: #eee;
+}
+
+.usuario-tabela tbody tr:hover {
+  background-color: #f5f5f5;
+}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usuários - S.A.C.O</title>
+  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="stylesheet" href="usuarios.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+  <div class="dashboard-container">
+    <aside class="sidebar hidden">
+      <div class="logo">S.A.C.O</div>
+      <nav class="menu">
+        <a href="dashboard.html" class="menu-item">Início</a>
+        <a href="agendamentos.html" class="menu-item">Agendamentos</a>
+        <a href="usuarios.html" class="menu-item">Usuários</a>
+        <a href="#" class="menu-item logout">Sair</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="top-bar">
+        <h1 class="page-title">Usuários</h1>
+        <div class="user-info">Olá, Admin</div>
+      </div>
+
+      <!-- Campo de busca -->
+      <input type="text" id="buscaUsuario" placeholder="Buscar usuários..." style="margin-top: 20px; padding: 8px; width: 100%; max-width: 400px;" />
+
+      <!-- Tabela de usuários -->
+      <div class="cards" style="margin-top: 20px;">
+        <div class="card" style="width: 100%; overflow-x: auto;">
+          <table id="tabelaUsuarios" style="width: 100%; border-collapse: collapse;">
+            <thead>
+              <tr style="background-color: #eee;">
+                <th style="padding: 10px; text-align: left;">Nome</th>
+                <th style="padding: 10px; text-align: left;">Email</th>
+                <th style="padding: 10px; text-align: left;">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 10px;">Renato</td>
+                <td style="padding: 10px;">renato@saco.com</td>
+                <td style="padding: 10px;">Ativo</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px;">Lucas</td>
+                <td style="padding: 10px;">lucas@saco.com</td>
+                <td style="padding: 10px;">Inativo</td>
+              </tr>
+              <!-- Novos usuários podem ser adicionados aqui -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Formulário de cadastro -->
+      <section class="main-section">
+        <h2 style="margin-top: 30px;">Adicionar Novo Usuário</h2>
+        <form class="usuario-form">
+            <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" required />
+            </div>
+            <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" required />
+            </div>
+            <div class="form-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required />
+            </div>
+            <button type="submit">Cadastrar Usuário</button>
+        </form>
+        </section>
+    </main>
+  </div>
+
+  <script>
+    function toggleSidebar() {
+      document.querySelector(".sidebar").classList.toggle("hidden");
+    }
+
+    // Filtro de busca
+    document.getElementById('buscaUsuario').addEventListener('keyup', function () {
+      const filtro = this.value.toLowerCase();
+      const linhas = document.querySelectorAll('#tabelaUsuarios tbody tr');
+      linhas.forEach(linha => {
+        const texto = linha.textContent.toLowerCase();
+        linha.style.display = texto.includes(filtro) ? '' : 'none';
+      });
+    });
+  </script>
+</body>
+</html>
