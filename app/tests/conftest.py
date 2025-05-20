@@ -3,29 +3,25 @@ from httpx import AsyncClient
 from app.main import app
 import uuid
 
-@pytest.mark.asyncio
-async def test_cadastro_login_usuario():
+@pytest.fixture
+async def auth_headers():
     async with AsyncClient(app=app, base_url="http://test") as ac:
-        email = f"erick_{uuid.uuid4().hex[:6]}@example.com"
+        email = f"test_{uuid.uuid4().hex[:6]}@example.com"
+        senha = "123456"
 
         # Cadastro
         response = await ac.post("/usuarios/cadastro", json={
-            "nome": "Erick",
+            "nome": "Usuário Teste",
             "email": email,
-            "senha": "123456"
+            "senha": senha
         })
-
-        print("STATUS CADASTRO:", response.status_code)
-        print("RESPOSTA CADASTRO:", response.json())
-
         assert response.status_code == 200
-        assert response.json()["email"] == email
 
         # Login
         login = await ac.post("/usuarios/login", json={
             "email": email,
-            "senha": "123456"
+            "senha": senha
         })
-
         assert login.status_code == 200
-        assert "access_token" in login.json()
+        token = login.json()["access_token"]
+        return {"Authorization": f"Bearer {token}"}
