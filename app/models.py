@@ -25,6 +25,7 @@ class Agendamento(Base):
     data_hora = Column(DateTime, nullable=False)
     local = Column(String, nullable=False)
     descricao = Column(String, nullable=True)
+    motivo_cancelamento = Column(String, nullable=True)
 
     usuario_id = Column(Integer, ForeignKey("users.id"), nullable=False)
 

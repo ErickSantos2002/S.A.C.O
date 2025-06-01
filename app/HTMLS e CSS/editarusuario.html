@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Usuários - S.A.C.O</title>
+  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="stylesheet" href="usuarios.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+  <div class="dashboard-container">
+    <aside class="sidebar hidden">
+      <div class="logo">S.A.C.O</div>
+      <nav class="menu">
+        <a href="dashboard.html" class="menu-item">Início</a>
+        <a href="agendamentos.html" class="menu-item">Agendamentos</a>
+        <a href="usuarios.html" class="menu-item">Usuários</a>
+        <a href="#" class="menu-item logout">Sair</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="top-bar">
+        <h1 class="page-title">Editar usuário</h1>
+        <div class="user-info">Olá, Admin</div>
+      </div>
+
+      <!-- Formulário de edição -->
+      <section class="main-section">
+        <form class="usuario-form">
+            <div class="form-group">
+            <label for="nome">Nome</label>
+            <input value="Renato" type="text" id="nome" name="nome" required />
+            </div>
+            <div class="form-group">
+            <label for="email">E-mail</label>
+            <input value="renato@saco.com" type="email" id="email" name="email" required />
+            </div>
+            <div class="form-group">
+            <label for="senha">Senha</label>
+            <input value="123456" type="password" id="senha" name="senha" required />
+            </div>
+            <button type="submit">Editar Usuário</button>
+        </form>
+        <button style="margin-top: 5px; background: rgb(182, 30, 30); color: white; padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer;">Excluir usuário</button>
+        </section>
+    </main>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    const token = localStorage.getItem("token");
+
+    async function carregarUsuario() {
+      const res = await fetch(`http://localhost:8000/usuarios/${id}`, {
+        headers: { Authorization: "Bearer " + token }
+      });
+      const data = await res.json();
+
+      document.getElementById("nome").value = data.nome;
+      document.getElementById("email").value = data.email;
+    }
+
+    document.querySelector(".usuario-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const nome = document.getElementById("nome").value;
+      const email = document.getElementById("email").value;
+      const senha = document.getElementById("senha").value;
+
+      const res = await fetch(`http://localhost:8000/usuarios/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token
+        },
+        body: JSON.stringify({ nome, email, senha })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("Usuário atualizado com sucesso!");
+        window.location.href = "usuarios.html";
+      } else {
+        alert(data.detail);
+      }
+    });
+
+    carregarUsuario();
+  </script>
+</body>
+</html>

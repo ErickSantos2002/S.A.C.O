@@ -40,6 +40,18 @@ class AgendamentoCreate(AgendamentoBase):
 class AgendamentoOut(AgendamentoBase):
     id: int
     usuario_id: int
+    motivo_cancelamento: str | None = None
+
+    class Config:
+        orm_mode = True
+
+class Cancelamento(BaseModel):
+    motivo: str
+
+class UserOut(BaseModel):
+    id: int
+    nome: str
+    email: EmailStr
 
     class Config:
         orm_mode = True

@@ -36,23 +36,14 @@
           <table id="tabelaUsuarios" style="width: 100%; border-collapse: collapse;">
             <thead>
               <tr style="background-color: #eee;">
+                <th style="padding: 10px; text-align: left;">- -</th>
                 <th style="padding: 10px; text-align: left;">Nome</th>
                 <th style="padding: 10px; text-align: left;">Email</th>
                 <th style="padding: 10px; text-align: left;">Status</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td style="padding: 10px;">Renato</td>
-                <td style="padding: 10px;">renato@saco.com</td>
-                <td style="padding: 10px;">Ativo</td>
-              </tr>
-              <tr>
-                <td style="padding: 10px;">Lucas</td>
-                <td style="padding: 10px;">lucas@saco.com</td>
-                <td style="padding: 10px;">Inativo</td>
-              </tr>
-              <!-- Novos usuários podem ser adicionados aqui -->
+            <tbody id="usuarios-tbody">
+              <!-- preenchido via JavaScript -->
             </tbody>
           </table>
         </div>
@@ -81,19 +72,57 @@
   </div>
 
   <script>
-    function toggleSidebar() {
-      document.querySelector(".sidebar").classList.toggle("hidden");
+    document.querySelector(".usuario-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const nome = document.getElementById("nome").value;
+      const email = document.getElementById("email").value;
+      const senha = document.getElementById("senha").value;
+
+      const res = await fetch("http://localhost:8000/usuarios/cadastro", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ nome, email, senha })
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("Usuário cadastrado com sucesso!");
+        location.reload();
+      } else {
+        alert(data.detail);
+      }
+    });
+    async function carregarUsuarios() {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch("http://localhost:8000/usuarios/", {
+        headers: { Authorization: "Bearer " + token }
+      });
+
+      const usuarios = await res.json();
+      const tbody = document.getElementById("usuarios-tbody");
+      tbody.innerHTML = "";
+
+      usuarios.forEach(usuario => {
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+          <td style="padding: 10px;">
+            <a style="color: blue;" href="editarusuario.html?id=${usuario.id}">Editar</a>
+          </td>
+          <td style="padding: 10px;">${usuario.nome}</td>
+          <td style="padding: 10px;">${usuario.email}</td>
+          <td style="padding: 10px;">Ativo</td>
+        `;
+
+        tbody.appendChild(tr);
+      });
     }
 
-    // Filtro de busca
-    document.getElementById('buscaUsuario').addEventListener('keyup', function () {
-      const filtro = this.value.toLowerCase();
-      const linhas = document.querySelectorAll('#tabelaUsuarios tbody tr');
-      linhas.forEach(linha => {
-        const texto = linha.textContent.toLowerCase();
-        linha.style.display = texto.includes(filtro) ? '' : 'none';
-      });
-    });
+    carregarUsuarios();
   </script>
 </body>
 </html>

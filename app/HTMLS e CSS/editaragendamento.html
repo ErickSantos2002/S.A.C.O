@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Agendamentos - S.A.C.O</title>
+  <link rel="stylesheet" href="dashboard.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <div class="logo">S.A.C.O</div>
+      <nav class="menu">
+        <a href="dashboard.html" class="menu-item">Início</a>
+        <a href="agendamentos.html" class="menu-item">Agendamentos</a>
+        <a href="usuarios.html" class="menu-item">Usuários</a>
+        <a href="#" class="menu-item logout">Sair</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <div class="top-bar">
+        <h1 class="page-title">Editar Agendamento</h1>
+        <div class="user-info">Olá, Usuário</div>
+      </div>
+
+      <section class="cards">
+        <!-- Formulário de Agendamento -->
+        <div class="card">
+          <form id="form-agendamento">
+            <div style="margin-bottom: 15px;">
+              <label for="data">Data do Agendamento</label><br />
+              <input value="2025-06-23" type="date" id="data" name="data" required style="width: 100%; padding: 8px; margin-top: 5px;" />
+            </div>
+
+            <div style="margin-bottom: 15px;">
+              <label for="hora">Horário</label><br />
+              <input value="10:00" type="time" id="hora" name="hora" required style="width: 100%; padding: 8px; margin-top: 5px;" />
+            </div>
+
+            <div style="margin-bottom: 15px;">
+              <label for="local">Local</label><br />
+              <input value="Unibra" type="text" id="local" name="local" required placeholder="Digite o local do agendamento" style="width: 100%; padding: 8px; margin-top: 5px;" />
+            </div>
+
+            <div style="margin-bottom: 15px;">
+              <label for="descricao">Descrição</label><br />
+              <textarea id="descricao" name="descricao" rows="4" required placeholder="Descreva o agendamento" style="width: 100%; padding: 8px; margin-top: 5px;">Aula de programação</textarea>
+            </div>
+
+            <button type="submit" style="background: rgb(75, 155, 179); color: white; padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer;">Editar Agendamento</button>
+          </form>
+          <button style="margin-top: 5px; background: rgb(182, 30, 30); color: white; padding: 10px 15px; border: none; border-radius: 6px; cursor: pointer;">Excluir Agendamento</button>
+        </div>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>

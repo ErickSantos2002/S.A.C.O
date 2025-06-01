@@ -19,7 +19,7 @@ body {
   position: fixed;
   top: 15px;
   left: 15px;
-  background: #8d6e63;
+  background: rgb(75, 155, 179);
   color: white;
   border: none;
   padding: 12px 16px;
@@ -46,7 +46,7 @@ body {
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-  background-color: #8d6e63;
+  background-color: rgb(75, 155, 179);
   color: white;
   padding: 15px;
 }

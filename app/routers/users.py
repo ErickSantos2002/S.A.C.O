@@ -6,10 +6,15 @@ Define as rotas da API para cadastro e login de usuários.
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from fastapi.security import OAuth2PasswordBearer
+from app import models
 from .. import schemas, crud, auth
 from ..database import SessionLocal
+from jose import jwt, JWTError
+from ..auth import SECRET_KEY, ALGORITHM
 
 router = APIRouter(prefix="/usuarios", tags=["Usuários"])
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="usuarios/login")
 
 # Dependência para pegar a sessão do banco em cada requisição
 def get_db():
@@ -39,3 +44,24 @@ def login(usuario: schemas.UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Credenciais inválidas")
     token = auth.criar_token({"sub": user.email})
     return {"access_token": token, "token_type": "bearer"}
+
+# autenticar usuário e obter id
+def get_current_user_id(token: str = Depends(oauth2_scheme)) -> int:
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email = payload.get("sub")
+        if not email:
+            raise HTTPException(status_code=401, detail="Token inválido")
+    except JWTError:
+        raise HTTPException(status_code=401, detail="Token inválido")
+
+    db = SessionLocal()
+    user = db.query(models.User).filter_by(email=email).first()
+    if not user:
+        raise HTTPException(status_code=401, detail="Usuário não encontrado")
+    return user.id
+
+# ✅ NOVA ROTA: lista todos os usuários
+@router.get("/", response_model=list[schemas.UserOut])
+def listar_usuarios(db: Session = Depends(get_db)):
+    return db.query(models.User).all()

@@ -11,7 +11,7 @@ body {
 
 /* Fundo da tela */
 .fundo-bege {
-  background-color: #f5f5dc;
+  background-color: #f7f7f7;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -33,7 +33,7 @@ body {
 .fundo-bege::before {
   width: 300px;
   height: 300px;
-  background-color: #d2b48c;
+  background-color: rgb(75, 155, 179);
   top: 10%;
   left: 5%;
 }
@@ -41,7 +41,7 @@ body {
 .fundo-bege::after {
   width: 400px;
   height: 400px;
-  background-color: #e6cfa1;
+  background-color: rgb(75, 155, 179);
   bottom: 5%;
   right: 10%;
 }
@@ -70,7 +70,7 @@ body {
   height: 40px;
   top: 0;
   left: -10%;
-  background-color: #d2b48c;
+  background-color: rgb(75, 155, 179);
   border-bottom-left-radius: 50%;
   border-bottom-right-radius: 50%;
   z-index: 0;
@@ -78,8 +78,8 @@ body {
 
 /* Logo */
 .imagem-logo {
-  max-width: 100px;
-  margin-bottom: 30px;
+  max-width: 200px;
+  margin-bottom: 10px;
   position: relative;
   z-index: 1;
 }
@@ -115,7 +115,7 @@ body {
 
 /* Botão */
 .botao-entrar {
-  background-color: #d2b48c;
+  background-color: rgb(75, 155, 179);
   color: white;
   border: none;
   padding: 12px;
@@ -126,7 +126,7 @@ body {
 }
 
 .botao-entrar:hover {
-  background-color: #e6cfa1;
+  background-color: rgb(128, 198, 219);
 }
 
 /* ---------------------- */
