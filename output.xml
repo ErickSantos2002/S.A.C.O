@@ -1,187 +1,206 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<robot generator="Robot 7.2.2 (Python 3.11.0 on win32)" generated="2025-05-26T20:18:08.237721" rpa="false" schemaversion="5">
-<suite id="s1" name="Testes Api" source="C:\Users\erick\OneDrive\Documentos\GitHub\S.A.C.O\testes_api.robot">
-<test id="s1-t1" name="Cadastro e Login de Usuário com Sucesso" line="43">
-<kw name="Gerar Email Único">
-<kw name="Evaluate" owner="BuiltIn">
-<msg time="2025-05-26T20:18:08.526958" level="INFO">${uuid} = 973291</msg>
-<var>${uuid}</var>
-<arg>__import__('uuid').uuid4().hex[:6]</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<status status="PASS" start="2025-05-26T20:18:08.523075" elapsed="0.003883"/>
+<robot generator="Robot 7.2.2 (Python 3.11.0 on win32)" generated="2025-06-02T23:24:11.524714" rpa="false" schemaversion="5">
+<suite id="s1" name="Fluxo Cliente Interface" source="C:\Users\erick\OneDrive\Documentos\GitHub\S.A.C.O\fluxo_cliente_interface.robot">
+<kw name="Abrir Navegador E Login" type="SETUP">
+<kw name="Open Browser" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:11.999585" level="INFO">Opening browser 'chrome' to base url 'http://127.0.0.1:5500/app/HTMLS%20e%20CSS/login.html'.</msg>
+<arg>${URL_LOGIN}</arg>
+<arg>chrome</arg>
+<doc>Opens a new browser instance to the optional ``url``.</doc>
+<status status="PASS" start="2025-06-02T23:24:11.998582" elapsed="1.799853"/>
 </kw>
-<kw name="Set Variable" owner="BuiltIn">
-<msg time="2025-05-26T20:18:08.526958" level="INFO">${email} = robot_973291@example.com</msg>
-<var>${email}</var>
-<arg>robot_${uuid}@example.com</arg>
-<doc>Returns the given values which can then be assigned to a variables.</doc>
-<status status="PASS" start="2025-05-26T20:18:08.526958" elapsed="0.000000"/>
+<kw name="Maximize Browser Window" owner="SeleniumLibrary">
+<doc>Maximizes current browser window.</doc>
+<status status="PASS" start="2025-06-02T23:24:13.799440" elapsed="0.101995"/>
 </kw>
-<return>
-<value>${email}</value>
-<status status="PASS" start="2025-05-26T20:18:08.526958" elapsed="0.001003"/>
-</return>
-<msg time="2025-05-26T20:18:08.527961" level="INFO">${EMAIL} = robot_973291@example.com</msg>
-<var>${EMAIL}</var>
-<status status="PASS" start="2025-05-26T20:18:08.522054" elapsed="0.005907"/>
+<kw name="Wait Until Element Is Visible" owner="SeleniumLibrary">
+<arg>id=email</arg>
+<arg>5s</arg>
+<doc>Waits until the element ``locator`` is visible.</doc>
+<status status="PASS" start="2025-06-02T23:24:13.901435" elapsed="0.060294"/>
 </kw>
-<kw name="Create Session" owner="RequestsLibrary">
-<msg time="2025-05-26T20:18:08.527961" level="INFO">Creating Session using : alias=api, url=http://localhost:8000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
-<arg>api</arg>
-<arg>${BASE_URL}</arg>
-<doc>Create Session: create a HTTP session to a server</doc>
-<status status="PASS" start="2025-05-26T20:18:08.527961" elapsed="0.000000"/>
-</kw>
-<kw name="Cadastrar Novo Usuário">
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2025-05-26T20:18:08.529145" level="INFO">${dados} = {'nome': 'Robot Teste', 'email': 'robot_973291@example.com', 'senha': '123456'}</msg>
-<var>${dados}</var>
-<arg>nome=${nome}</arg>
-<arg>email=${email}</arg>
-<arg>senha=${senha}</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2025-05-26T20:18:08.529145" elapsed="0.000000"/>
-</kw>
-<kw name="POST On Session" owner="RequestsLibrary">
-<msg time="2025-05-26T20:18:10.906262" level="INFO">POST Request : url=http://localhost:8000/usuarios/cadastro 
- path_url=/usuarios/cadastro 
- headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '79', 'Content-Type': 'application/json'} 
- body=b'{"nome": "Robot Teste", "email": "robot_973291@example.com", "senha": "123456"}' 
- </msg>
-<msg time="2025-05-26T20:18:10.906262" level="INFO">POST Response : url=http://localhost:8000/usuarios/cadastro 
- status=200, reason=OK 
- headers={'date': 'Mon, 26 May 2025 23:18:09 GMT', 'server': 'uvicorn', 'content-length': '65', 'content-type': 'application/json'} 
- body={"id":24,"nome":"Robot Teste","email":"robot_973291@example.com"} 
- </msg>
-<msg time="2025-05-26T20:18:10.906262" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
-<var>${resposta}</var>
-<arg>api</arg>
-<arg>/usuarios/cadastro</arg>
-<arg>json=${dados}</arg>
-<doc>Sends a POST request on a previously created HTTP Session.</doc>
-<status status="PASS" start="2025-05-26T20:18:08.529145" elapsed="2.377117"/>
-</kw>
-<kw name="Log" owner="BuiltIn">
-<msg time="2025-05-26T20:18:10.907265" level="INFO">STATUS: 200</msg>
-<arg>STATUS: ${resposta.status_code}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-05-26T20:18:10.906262" elapsed="0.001003"/>
-</kw>
-<kw name="Log" owner="BuiltIn">
-<msg time="2025-05-26T20:18:10.907265" level="INFO">BODY: {"id":24,"nome":"Robot Teste","email":"robot_973291@example.com"}</msg>
-<arg>BODY: ${resposta.content}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-05-26T20:18:10.907265" elapsed="0.000000"/>
-</kw>
-<kw name="Should Be Equal As Strings" owner="BuiltIn">
-<msg time="2025-05-26T20:18:10.908772" level="INFO">Argument types are:
-&lt;class 'int'&gt;
-&lt;class 'str'&gt;</msg>
-<arg>${resposta.status_code}</arg>
-<arg>200</arg>
-<doc>Fails if objects are unequal after converting them to strings.</doc>
-<status status="PASS" start="2025-05-26T20:18:10.907265" elapsed="0.001507"/>
-</kw>
-<return>
-<value>${resposta}</value>
-<status status="PASS" start="2025-05-26T20:18:10.908772" elapsed="0.000000"/>
-</return>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:13.961729" level="INFO">Typing text 'ericksantosdantas@gmail.com' into text field 'id=email'.</msg>
+<arg>id=email</arg>
 <arg>${EMAIL}</arg>
-<arg>${NOME}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:13.961729" elapsed="0.269419"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:14.232150" level="INFO">Typing text '04112002' into text field 'id=senha'.</msg>
+<arg>id=senha</arg>
 <arg>${SENHA}</arg>
-<status status="PASS" start="2025-05-26T20:18:08.527961" elapsed="2.380811"/>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:14.232150" elapsed="0.135215"/>
 </kw>
-<kw name="Logar Usuário">
-<kw name="Create Dictionary" owner="BuiltIn">
-<msg time="2025-05-26T20:18:10.911077" level="INFO">${dados} = {'email': 'robot_973291@example.com', 'senha': '123456'}</msg>
-<var>${dados}</var>
-<arg>email=${email}</arg>
-<arg>senha=${senha}</arg>
-<doc>Creates and returns a dictionary based on the given ``items``.</doc>
-<status status="PASS" start="2025-05-26T20:18:10.909777" elapsed="0.001300"/>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:14.368366" level="INFO">Clicking button 'xpath=//button[contains(text(), 'Entrar')]'.</msg>
+<arg>xpath=//button[contains(text(), 'Entrar')]</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:14.367365" elapsed="0.128144"/>
 </kw>
-<kw name="POST On Session" owner="RequestsLibrary">
-<msg time="2025-05-26T20:18:11.224084" level="INFO">POST Request : url=http://localhost:8000/usuarios/login 
- path_url=/usuarios/login 
- headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '56', 'Content-Type': 'application/json'} 
- body=b'{"email": "robot_973291@example.com", "senha": "123456"}' 
- </msg>
-<msg time="2025-05-26T20:18:11.224084" level="INFO">POST Response : url=http://localhost:8000/usuarios/login 
- status=200, reason=OK 
- headers={'date': 'Mon, 26 May 2025 23:18:09 GMT', 'server': 'uvicorn', 'content-length': '190', 'content-type': 'application/json'} 
- body={"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJyb2JvdF85NzMyOTFAZXhhbXBsZS5jb20iLCJleHAiOjE3NDgzMDUwOTF9.BU8gMjs_9maszMJueEszlF15C5_KowRYlMoQBqIZSnM","token_type":"bearer"} 
- </msg>
-<msg time="2025-05-26T20:18:11.224084" level="INFO">${resposta} = &lt;Response [200]&gt;</msg>
-<var>${resposta}</var>
-<arg>api</arg>
-<arg>/usuarios/login</arg>
-<arg>json=${dados}</arg>
-<doc>Sends a POST request on a previously created HTTP Session.</doc>
-<status status="PASS" start="2025-05-26T20:18:10.911077" elapsed="0.313007"/>
+<kw name="Wait Until Location Contains" owner="SeleniumLibrary">
+<arg>dashboard.html</arg>
+<arg>5s</arg>
+<doc>Waits until the current URL contains ``expected``.</doc>
+<status status="PASS" start="2025-06-02T23:24:14.495509" elapsed="1.407812"/>
 </kw>
-<kw name="Log" owner="BuiltIn">
-<msg time="2025-05-26T20:18:11.225124" level="INFO">STATUS: 200</msg>
-<arg>STATUS: ${resposta.status_code}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-05-26T20:18:11.225124" elapsed="0.000000"/>
+<status status="PASS" start="2025-06-02T23:24:11.997460" elapsed="3.906371"/>
 </kw>
-<kw name="Log" owner="BuiltIn">
-<msg time="2025-05-26T20:18:11.226129" level="INFO">BODY: {"access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJyb2JvdF85NzMyOTFAZXhhbXBsZS5jb20iLCJleHAiOjE3NDgzMDUwOTF9.BU8gMjs_9maszMJueEszlF15C5_KowRYlMoQBqIZSnM","token_type":"bearer"}</msg>
-<arg>BODY: ${resposta.content}</arg>
-<doc>Logs the given message with the given level.</doc>
-<status status="PASS" start="2025-05-26T20:18:11.226129" elapsed="0.001005"/>
+<test id="s1-t1" name="Fluxo Completo SACO - Agendamento e Usuário" line="19">
+<kw name="Criar Agendamento">
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:15.904834" level="INFO">Clicking link 'xpath=//a[contains(@href, 'agendamentos.html')]'.</msg>
+<arg>xpath=//a[contains(@href, 'agendamentos.html')]</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:15.904834" elapsed="0.183902"/>
 </kw>
-<kw name="Should Be Equal As Strings" owner="BuiltIn">
-<msg time="2025-05-26T20:18:11.227134" level="INFO">Argument types are:
-&lt;class 'int'&gt;
-&lt;class 'str'&gt;</msg>
-<arg>${resposta.status_code}</arg>
-<arg>200</arg>
-<doc>Fails if objects are unequal after converting them to strings.</doc>
-<status status="PASS" start="2025-05-26T20:18:11.227134" elapsed="0.000000"/>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>id=form-agendamento</arg>
+<arg>5s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-06-02T23:24:16.088736" elapsed="0.034240"/>
 </kw>
-<return>
-<value>${resposta}</value>
-<status status="PASS" start="2025-05-26T20:18:11.227134" elapsed="0.000000"/>
-</return>
-<msg time="2025-05-26T20:18:11.227134" level="INFO">${res_login} = &lt;Response [200]&gt;</msg>
-<var>${res_login}</var>
-<arg>${EMAIL}</arg>
-<arg>${SENHA}</arg>
-<status status="PASS" start="2025-05-26T20:18:10.909777" elapsed="0.317357"/>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:16.122976" level="INFO">Typing text '2025-07-15' into text field 'id=data'.</msg>
+<arg>id=data</arg>
+<arg>${DATA}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:16.122976" elapsed="0.254230"/>
 </kw>
-<kw name="Extrair Token de Resposta">
-<kw name="Evaluate" owner="BuiltIn">
-<msg time="2025-05-26T20:18:11.229191" level="INFO">${json} = {'access_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJyb2JvdF85NzMyOTFAZXhhbXBsZS5jb20iLCJleHAiOjE3NDgzMDUwOTF9.BU8gMjs_9maszMJueEszlF15C5_KowRYlMoQBqIZSnM', 'token_type': 'bearer'}</msg>
-<var>${json}</var>
-<arg>__import__('json').loads("""${resposta.content.decode("utf-8")}""")</arg>
-<doc>Evaluates the given expression in Python and returns the result.</doc>
-<status status="PASS" start="2025-05-26T20:18:11.229191" elapsed="0.000000"/>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:16.378208" level="INFO">Typing text '14:00' into text field 'id=hora'.</msg>
+<arg>id=hora</arg>
+<arg>${HORA}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:16.377206" elapsed="0.095716"/>
 </kw>
-<kw name="Dictionary Should Contain Key" owner="Collections">
-<arg>${json}</arg>
-<arg>access_token</arg>
-<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
-<status status="PASS" start="2025-05-26T20:18:11.230378" elapsed="0.000000"/>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:16.474180" level="INFO">Typing text 'Sala 203' into text field 'id=local'.</msg>
+<arg>id=local</arg>
+<arg>${LOCAL}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:16.474180" elapsed="0.130922"/>
 </kw>
-<kw name="Dictionary Should Contain Key" owner="Collections">
-<arg>${json}</arg>
-<arg>token_type</arg>
-<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
-<status status="PASS" start="2025-05-26T20:18:11.230378" elapsed="0.000000"/>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:16.606108" level="INFO">Typing text 'Teste automatizado de agendamento' into text field 'id=descricao'.</msg>
+<arg>id=descricao</arg>
+<arg>${DESCRICAO}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:16.605102" elapsed="0.213587"/>
 </kw>
-<return>
-<value>${json}</value>
-<status status="PASS" start="2025-05-26T20:18:11.230378" elapsed="0.000000"/>
-</return>
-<msg time="2025-05-26T20:18:11.230378" level="INFO">${token_json} = {'access_token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJyb2JvdF85NzMyOTFAZXhhbXBsZS5jb20iLCJleHAiOjE3NDgzMDUwOTF9.BU8gMjs_9maszMJueEszlF15C5_KowRYlMoQBqIZSnM', 'token_type': 'bearer'}</msg>
-<var>${token_json}</var>
-<arg>${res_login}</arg>
-<status status="PASS" start="2025-05-26T20:18:11.227134" elapsed="0.003244"/>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:16.819694" level="INFO">Clicking button 'xpath=//button[contains(text(), 'Salvar Agendamento')]'.</msg>
+<arg>xpath=//button[contains(text(), 'Salvar Agendamento')]</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:16.819694" elapsed="0.103311"/>
 </kw>
-<status status="PASS" start="2025-05-26T20:18:08.522054" elapsed="2.709327"/>
+<kw name="Handle Alert" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:16.923005" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<arg>action=ACCEPT</arg>
+<doc>Handles the current alert and returns its message.</doc>
+<status status="PASS" start="2025-06-02T23:24:16.923005" elapsed="0.508495"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-06-02T23:24:18.432029" level="INFO">Slept 1 second.</msg>
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-06-02T23:24:17.431500" elapsed="1.000529"/>
+</kw>
+<status status="PASS" start="2025-06-02T23:24:15.904834" elapsed="2.527195"/>
+</kw>
+<kw name="Criar Novo Usuario">
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:18.433034" level="INFO">Clicking link 'xpath=//a[contains(@href, 'usuarios.html')]'.</msg>
+<arg>xpath=//a[contains(@href, 'usuarios.html')]</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:18.433034" elapsed="0.138558"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>xpath=//form[contains(@class, 'usuario-form')]</arg>
+<arg>5s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-06-02T23:24:18.573100" elapsed="0.012564"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:18.587169" level="INFO">Typing text 'Teste Selenium' into text field 'id=nome'.</msg>
+<arg>id=nome</arg>
+<arg>${NOME_USUARIO}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:18.585664" elapsed="0.109746"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:18.695410" level="INFO">Typing text 'teste-selenium@saco.com' into text field 'id=email'.</msg>
+<arg>id=email</arg>
+<arg>${EMAIL_USUARIO}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:18.695410" elapsed="0.166092"/>
+</kw>
+<kw name="Input Text" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:18.861502" level="INFO">Typing text '1234567' into text field 'id=senha'.</msg>
+<arg>id=senha</arg>
+<arg>${SENHA_USUARIO}</arg>
+<doc>Types the given ``text`` into the text field identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:18.861502" elapsed="0.184777"/>
+</kw>
+<kw name="Click Button" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:19.046279" level="INFO">Clicking button 'xpath=//button[contains(text(), 'Cadastrar Usuário')]'.</msg>
+<arg>xpath=//button[contains(text(), 'Cadastrar Usuário')]</arg>
+<doc>Clicks the button identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:19.046279" elapsed="0.102695"/>
+</kw>
+<kw name="Handle Alert" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:19.148974" level="INFO">HANDLE::&lt;class 'NoneType'&gt;::None</msg>
+<arg>action=ACCEPT</arg>
+<doc>Handles the current alert and returns its message.</doc>
+<status status="PASS" start="2025-06-02T23:24:19.148974" elapsed="0.012417"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-06-02T23:24:20.161782" level="INFO">Slept 1 second.</msg>
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-06-02T23:24:19.161391" elapsed="1.000391"/>
+</kw>
+<status status="PASS" start="2025-06-02T23:24:18.432029" elapsed="1.729753"/>
+</kw>
+<kw name="Voltar Ao Dashboard E Fazer Logout">
+<kw name="Click Link" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:20.162791" level="INFO">Clicking link 'xpath=//a[contains(@href, 'agendamentos.html')]'.</msg>
+<arg>xpath=//a[contains(@href, 'agendamentos.html')]</arg>
+<doc>Clicks a link identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:20.162791" elapsed="0.141410"/>
+</kw>
+<kw name="Wait Until Page Contains Element" owner="SeleniumLibrary">
+<arg>id=form-agendamento</arg>
+<arg>5s</arg>
+<doc>Waits until the element ``locator`` appears on the current page.</doc>
+<status status="PASS" start="2025-06-02T23:24:20.304201" elapsed="0.014557"/>
+</kw>
+<kw name="Click Element" owner="SeleniumLibrary">
+<msg time="2025-06-02T23:24:20.319761" level="INFO">Clicking element 'xpath=//a[contains(@class, 'logout')]'.</msg>
+<arg>xpath=//a[contains(@class, 'logout')]</arg>
+<doc>Click the element identified by ``locator``.</doc>
+<status status="PASS" start="2025-06-02T23:24:20.319761" elapsed="0.131315"/>
+</kw>
+<kw name="Wait Until Location Contains" owner="SeleniumLibrary">
+<arg>login.html</arg>
+<arg>5s</arg>
+<doc>Waits until the current URL contains ``expected``.</doc>
+<status status="PASS" start="2025-06-02T23:24:20.451076" elapsed="0.009537"/>
+</kw>
+<status status="PASS" start="2025-06-02T23:24:20.161782" elapsed="0.298831"/>
+</kw>
+<doc>Faz login, cria agendamento, cadastra usuário, volta e faz logout.</doc>
+<status status="PASS" start="2025-06-02T23:24:15.903831" elapsed="4.557787"/>
 </test>
-<status status="PASS" start="2025-05-26T20:18:08.240729" elapsed="2.990652"/>
+<kw name="Fechar Navegador" type="TEARDOWN">
+<kw name="Close Browser" owner="SeleniumLibrary">
+<doc>Closes the current browser.</doc>
+<status status="PASS" start="2025-06-02T23:24:20.463125" elapsed="2.418124"/>
+</kw>
+<status status="PASS" start="2025-06-02T23:24:20.461618" elapsed="2.419631"/>
+</kw>
+<status status="PASS" start="2025-06-02T23:24:11.529891" elapsed="11.351358"/>
 </suite>
 <statistics>
 <total>
@@ -190,7 +209,7 @@
 <tag>
 </tag>
 <suite>
-<stat name="Testes Api" id="s1" pass="1" fail="0" skip="0">Testes Api</stat>
+<stat name="Fluxo Cliente Interface" id="s1" pass="1" fail="0" skip="0">Fluxo Cliente Interface</stat>
 </suite>
 </statistics>
 <errors>
