@@ -6,7 +6,7 @@ Suite Teardown    Fechar Navegador
 *** Variables ***
 ${URL_LOGIN}    http://127.0.0.1:5500/app/HTMLS%20e%20CSS/login.html
 ${EMAIL}        ericksantosdantas@gmail.com
-${SENHA}        04112002
+${SENHA}        123456
 ${NOME_USUARIO}    Teste Selenium
 ${EMAIL_USUARIO}   teste-selenium@saco.com
 ${SENHA_USUARIO}   1234567
